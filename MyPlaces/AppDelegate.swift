@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //2.5.1
         let manager = ManagerPlaces.shared()
-        var pl = Place(name: "Test PLace", description: "More info", image_int: nil)
+        let pl = Place(name: "Test PLace", description: "More info", image_int: nil)
         manager.places.append(pl)
         return true
     }

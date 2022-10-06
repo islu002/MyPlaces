@@ -46,12 +46,17 @@ class ManagerPlaces {
     }
     
     func GetItemById(id: String) -> Place {
-        var index = places.firstIndex(where: {$0.id == id})
+        let index = places.firstIndex(where: {$0.id == id})
         return places[index!]
     }
     
     func remove(_ value: Place) {
-        var index = places.firstIndex(where: {$0 === value})
+        let index = places.firstIndex(where: {$0 === value})
        places.remove(at: index!)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteElement"), object: nil)
+    }
+    
+    func GetPosition(_ value: Place) -> Int {
+        return places.firstIndex(where: {$0 === value})!
     }
 }

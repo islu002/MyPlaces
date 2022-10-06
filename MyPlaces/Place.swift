@@ -39,5 +39,6 @@ class Place {
         self.description = description
         self.image = image_int
     }
+    
 
 }

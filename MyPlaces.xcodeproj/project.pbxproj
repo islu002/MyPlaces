@@ -21,6 +21,9 @@
 		DD5E917928E1004A00FA4CDB /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5E917528E1004A00FA4CDB /* Place.swift */; };
 		DD5E917A28E1004A00FA4CDB /* PlaceTourist.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5E917628E1004A00FA4CDB /* PlaceTourist.swift */; };
 		DD5E917C28E1082700FA4CDB /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5E917B28E1082700FA4CDB /* FirstViewController.swift */; };
+		DDAEFD4F28EF721A00E5A576 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAEFD4E28EF721A00E5A576 /* MapViewController.swift */; };
+		DDB02BFE28EB842900BBCC4D /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = DDB02BFD28EB842900BBCC4D /* sun.png */; };
+		DDB043C828E643D100B882D8 /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB043C728E643D100B882D8 /* NewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,9 @@
 		DD5E917528E1004A00FA4CDB /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		DD5E917628E1004A00FA4CDB /* PlaceTourist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceTourist.swift; sourceTree = "<group>"; };
 		DD5E917B28E1082700FA4CDB /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		DDAEFD4E28EF721A00E5A576 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		DDB02BFD28EB842900BBCC4D /* sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun.png; sourceTree = "<group>"; };
+		DDB043C728E643D100B882D8 /* NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +95,6 @@
 		DD5E913728E0FE5E00FA4CDB = {
 			isa = PBXGroup;
 			children = (
-				DD5E917B28E1082700FA4CDB /* FirstViewController.swift */,
 				DD5E914228E0FE5E00FA4CDB /* MyPlaces */,
 				DD5E915928E0FE6000FA4CDB /* MyPlacesTests */,
 				DD5E916328E0FE6000FA4CDB /* MyPlacesUITests */,
@@ -110,7 +115,9 @@
 		DD5E914228E0FE5E00FA4CDB /* MyPlaces */ = {
 			isa = PBXGroup;
 			children = (
+				DDB02BFD28EB842900BBCC4D /* sun.png */,
 				DD5E917328E1004A00FA4CDB /* DetailController.swift */,
+				DD5E917B28E1082700FA4CDB /* FirstViewController.swift */,
 				DD5E917428E1004A00FA4CDB /* ManagerPlaces.swift */,
 				DD5E917528E1004A00FA4CDB /* Place.swift */,
 				DD5E917628E1004A00FA4CDB /* PlaceTourist.swift */,
@@ -121,6 +128,8 @@
 				DD5E914C28E0FE5F00FA4CDB /* Assets.xcassets */,
 				DD5E914E28E0FE5F00FA4CDB /* LaunchScreen.storyboard */,
 				DD5E915128E0FE5F00FA4CDB /* Info.plist */,
+				DDB043C728E643D100B882D8 /* NewViewController.swift */,
+				DDAEFD4E28EF721A00E5A576 /* MapViewController.swift */,
 			);
 			path = MyPlaces;
 			sourceTree = "<group>";
@@ -246,6 +255,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDB02BFE28EB842900BBCC4D /* sun.png in Resources */,
 				DD5E915028E0FE5F00FA4CDB /* LaunchScreen.storyboard in Resources */,
 				DD5E914D28E0FE5F00FA4CDB /* Assets.xcassets in Resources */,
 				DD5E914B28E0FE5E00FA4CDB /* Main.storyboard in Resources */,
@@ -276,9 +286,11 @@
 				DD5E917728E1004A00FA4CDB /* DetailController.swift in Sources */,
 				DD5E917A28E1004A00FA4CDB /* PlaceTourist.swift in Sources */,
 				DD5E917828E1004A00FA4CDB /* ManagerPlaces.swift in Sources */,
+				DDAEFD4F28EF721A00E5A576 /* MapViewController.swift in Sources */,
 				DD5E917C28E1082700FA4CDB /* FirstViewController.swift in Sources */,
 				DD5E914828E0FE5E00FA4CDB /* ViewController.swift in Sources */,
 				DD5E917928E1004A00FA4CDB /* Place.swift in Sources */,
+				DDB043C828E643D100B882D8 /* NewViewController.swift in Sources */,
 				DD5E914428E0FE5E00FA4CDB /* AppDelegate.swift in Sources */,
 				DD5E914628E0FE5E00FA4CDB /* SceneDelegate.swift in Sources */,
 			);
@@ -460,6 +472,10 @@
 				DEVELOPMENT_TEAM = T6L2QL2M3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyPlaces/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "GPS required";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "GPS required";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS required";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -488,6 +504,10 @@
 				DEVELOPMENT_TEAM = T6L2QL2M3B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyPlaces/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "GPS required";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "GPS required";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS required";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
