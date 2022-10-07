@@ -14,6 +14,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
     @IBOutlet weak var mapView: MKMapView!
     
     let locationManger = CLLocationManager()
+    var manager = ManagerPlaces.shared().places
+    var annotation = MKPointAnnotation()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,14 +36,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
             var pin = MKPlacemark(coordinate: locationManger.location!.coordinate)
             let region = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
             mapView.setRegion(region, animated: true)
-            
-            var annotation = MKPointAnnotation()
             annotation.coordinate = pin.coordinate
             annotation.title = "Estoy aquí!"
             
             mapView.addAnnotation(annotation)
         }
         
+        addPlacesPin()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshData), name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
     }
     
 
@@ -63,13 +65,39 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
        mapView.addAnnotation(pin)
     }
     
+    func addPlacesPin() {
+        manager.forEach { place in
+            let pin = MKPlacemark(coordinate: place.location)
+            var annotationPin = MKPointAnnotation()
+            annotationPin.coordinate = pin.coordinate
+            annotationPin.title = place.name
+            mapView.addAnnotation(annotationPin)
+        }
+    }
     
+    @objc func refreshData() {
+       mapView.annotations.forEach { notation in
+           if !(notation.isEqual(annotation)) {
+               mapView.removeAnnotation(notation)
+           }
+       }
+       manager = ManagerPlaces.shared().places
+    }
     
 }
 
 extension MapViewController: MKMapViewDelegate {
 
    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
-      print("didSelectAnnotationTapped")
+       print("didSelectAnnotationTapped", view)
+       let dc = self.storyboard?.instantiateViewController(withIdentifier: "idDetailController") as! DetailController
+       print(view.annotation)
+       let index = manager.firstIndex(where: {$0.name == view.annotation?.title &&
+           $0.location.latitude == view.annotation?.coordinate.latitude &&
+           $0.location.longitude == view.annotation?.coordinate.longitude})
+       dc.place = manager[index!]
+       self.present(dc, animated: true)
    }
 }
+
+

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,8 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         //2.5.1
         let manager = ManagerPlaces.shared()
-        let pl = Place(name: "Test PLace", description: "More info", image_int: nil)
+        var pl = Place(name: "Test PLace", description: "More info", image_int: nil)
+        pl.location = CLLocationCoordinate2D(latitude: 42.265281, longitude: 2.958205)
         manager.places.append(pl)
+        
+        var pl2 = Place(name: "Test2 PLace2", description: "More info2", image_int: nil)
+        pl2.location = CLLocationCoordinate2D(latitude: 41.972979, longitude: 2.825447)
+        manager.places.append(pl2)
         return true
     }
 
