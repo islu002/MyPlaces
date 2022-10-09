@@ -8,12 +8,12 @@
 import Foundation
 import MapKit
 
-enum PlacesTypes {
+enum PlacesTypes : Codable {
     case GenericPlace
     case TouristPlace
 }
 
-class Place {
+class Place : Codable {
     var id: String = ""
     var type: PlacesTypes = .GenericPlace
     var name: String = ""
@@ -40,5 +40,43 @@ class Place {
         self.image = image_int
     }
     
+    //******************************************
+      // Serialization
+      
+      enum CodingKeys: String, CodingKey {
+          case id
+          case name
+          case type
+          case description
+          case image
+      }
+      
+      func decode(from decoder: Decoder) throws
+      {
+          
+          let container = try decoder.container(keyedBy: CodingKeys.self)
+          
+          id = try container.decode(String.self, forKey: .id)
+          type = try container.decode(PlacesTypes.self, forKey: .type)
+          name = try container.decode(String.self, forKey: .name)
+          description = try container.decode(String.self, forKey: .description)
+          image = try? container.decode(String.self, forKey: .image) as! Data?
+      }
+      
+      required convenience init(from decoder: Decoder) throws {
+          
+          self.init()
+          try decode(from: decoder)
+      }
+      
+      func encode(to encoder: Encoder) throws {
+          var container = encoder.container(keyedBy: CodingKeys.self)
+          try container.encode(id, forKey: .id)
+          try container.encode(type, forKey: .type)
+          try container.encode(name, forKey: .name)
+          try container.encode(description, forKey: .description)
+          try container.encode(image, forKey: .image)
+        
+      }
 
 }
