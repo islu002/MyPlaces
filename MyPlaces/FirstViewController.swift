@@ -8,7 +8,7 @@
 import UIKit
 
 class FirstViewController : UITableViewController {
-    var manager = ManagerPlaces.shared().places
+    var manager = ManagerPlaces.shared()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,7 +26,8 @@ class FirstViewController : UITableViewController {
        }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection: Int) -> Int {
-        return manager.count
+        //return manager.count
+        return manager.GetCount()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -36,7 +37,8 @@ class FirstViewController : UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
      // Access to item using manager
-        let selected = manager[indexPath.row]
+       // let selected = manager[indexPath.row]
+        let selected = manager.GetItemAt(position: indexPath.row)
      // Present detail controller
         let dc = self.storyboard?.instantiateViewController(withIdentifier: "idDetailController") as! DetailController
         dc.place = selected
@@ -62,33 +64,36 @@ class FirstViewController : UITableViewController {
         // UILabel and UIImageView
         
         var label: UILabel
-        label = UILabel(frame: CGRect(x:10,y:10,width:wt,height:40))
-        let fuente: UIFont = UIFont(name: "Arial", size: 14)!
+        label = UILabel(frame: CGRect(x:90,y:10,width:wt,height:40))
+        let fuente: UIFont = UIFont(name: "Arial", size: 18)!
         label.font = fuente
         label.numberOfLines = 1
-        label.text = manager[indexPath.row].name
+        //label.text = manager[indexPath.row].name
+        label.text = manager.GetItemAt(position: indexPath.row).name
         label.sizeToFit()
         cell.contentView.addSubview(label)
         
         var description: UILabel
-        description = UILabel(frame: CGRect(x:10,y:50,width:wt,height:40))
+        description = UILabel(frame: CGRect(x:90,y:50,width:wt,height:40))
         let fuenteDescription: UIFont = UIFont(name: "Arial", size: 12)!
         description.font = fuenteDescription
         description.numberOfLines = 4
-        description.text = manager[indexPath.row].description
+        //description.text = manager[indexPath.row].description
+        description.text = manager.GetItemAt(position: indexPath.row).description
         description.sizeToFit()
         cell.contentView.addSubview(description)
             
-        /*let imageIcon: UIImageView = UIImageView(image: UIImage(named:"sun.png"))
-        imageIcon.frame = CGRect(x:10, y:50, width:50, height:50)
+        let imageIcon: UIImageView = UIImageView(image: UIImage(named:"sun.png"))
+        imageIcon.frame = CGRect(x:10, y:10, width:80, height:80)
         cell.contentView.addSubview(imageIcon)
-        */
+        
         
         return cell
     }
     
     @objc func refresh(){
-        manager = ManagerPlaces.shared().places
+        //manager = ManagerPlaces.shared().places
+        manager = ManagerPlaces.shared()
         self.tableView.reloadData()
     }
 
