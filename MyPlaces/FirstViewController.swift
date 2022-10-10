@@ -8,16 +8,26 @@
 import UIKit
 
 class FirstViewController : UITableViewController {
+    @IBOutlet weak var loadingView: UIView!
+
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     var manager = ManagerPlaces.shared()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setLoader()
         let view: UITableView = (self.view as? UITableView)!;
                 view.delegate = self
                 view.dataSource = self
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "deleteElement"), object: nil)
+        
+        //disableLoader()
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(3000)) {
+            self.disableLoader()
+            print("pasaron los 3 segundos")
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -93,9 +103,23 @@ class FirstViewController : UITableViewController {
     
     @objc func refresh(){
         //manager = ManagerPlaces.shared().places
+        setLoader()
         manager = ManagerPlaces.shared()
         self.tableView.reloadData()
+        disableLoader()
     }
 
+    func setLoader() {
+        loadingView.isHidden = false
+        spinner.startAnimating()
+        spinner.isHidden = false
+    }
+    
+    func disableLoader() {
+        spinner.stopAnimating()
+        spinner.isHidden = true
+        loadingView.frame = CGRect(x:0, y:0, width: 0, height: 0)
+        loadingView.isHidden = true
+    }
         
 }

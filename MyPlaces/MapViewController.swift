@@ -12,18 +12,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
 
     // MARK: - Variables
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var loadingView: UIView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     let locationManger = CLLocationManager()
     var manager = ManagerPlaces.shared().places
     var annotation = MKPointAnnotation()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         /*let pinlocation = CLLocationCoordinate2D(latitude: 42, longitude: 3)
         setPinUsingMKPlacemark(location: pinlocation)*/
-        
+        setLoader()
         mapView.delegate = self
         locationManger.requestAlwaysAuthorization()
         locationManger.requestWhenInUseAuthorization()
@@ -44,6 +46,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         
         addPlacesPin()
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshData), name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
+            self.disableLoader()
+
+        }
     }
     
 
@@ -83,7 +89,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
        }
        manager = ManagerPlaces.shared().places
     }
+ 
+    func setLoader() {
+        loadingView.isHidden = false
+        spinner.startAnimating()
+        spinner.isHidden = false
+    }
     
+    func disableLoader() {
+        spinner.stopAnimating()
+        spinner.isHidden = true
+        //loadingView.frame = CGRect(x:0, y:0, width: 0, height: 0)
+        loadingView.isHidden = true
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
