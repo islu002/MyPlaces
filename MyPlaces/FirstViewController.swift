@@ -22,6 +22,7 @@ class FirstViewController : UITableViewController {
                 view.dataSource = self
         // Do any additional setup after loading the view.
         NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "deleteElement"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
         
         //disableLoader()
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(3000)) {

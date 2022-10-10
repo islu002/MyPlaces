@@ -10,15 +10,16 @@ import UIKit
 class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
    
     let types = ["Generic Place", "Tourist Place"]
-    var manager = ManagerPlaces.shared().places
-    
-    @IBOutlet weak var notes: UITextField!
-    //@IBOutlet weak var constrainHeight: NSLayoutConstraint!
-    @IBOutlet weak var select: UIButton!
+    var manager = ManagerPlaces.shared()
+    var index: Int = 0
+
+    @IBOutlet weak var name: UITextField!
+
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var chooseType: UIPickerView!
+
+    @IBOutlet weak var notes: UITextView!
     
-    @IBOutlet weak var name: UITextField!
     var place: Place!
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -44,14 +45,16 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        name.text = place.name
         notes.text = place.description
+        image.image = UIImage(named: "sun.png")
 
         // Do any additional setup after loading the view.
         
         //self.constrainHeight.constant = 400
         chooseType.delegate = self
         chooseType.dataSource = self
+        index = manager.GetPosition(place)
     }
   
     override func viewDidAppear(_ animated: Bool) {
@@ -77,19 +80,22 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
     */
 
     @IBAction func deletePlace(_ sender: Any) {
-        ManagerPlaces.shared().remove(place)
+        manager.remove(place)
         dismiss(animated: true, completion: nil)
-       
     }
     
-    
-    
+
     @IBAction func updatePlace(_ sender: Any) {
- 
+        if (name.text!.isEmpty == false && notes.text.isEmpty == false) {
+            place.name = name.text!
+            place.description = notes.text
+            manager.update(place, index: index)
+            dismiss(animated: true, completion: nil)
+        }
+        else {
+            let alert = UIAlertController(title: "ERROR", message: "Name and notes are required", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
-    
-   
-    
-    
-    
 }

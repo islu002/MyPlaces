@@ -16,7 +16,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     let locationManger = CLLocationManager()
-    var manager = ManagerPlaces.shared().places
+    var manager = ManagerPlaces.shared()
     var annotation = MKPointAnnotation()
 
     override func viewDidLoad() {
@@ -46,6 +46,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         
         addPlacesPin()
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshData), name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshData), name: NSNotification.Name(rawValue: "deleteElement"), object: nil)
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
             self.disableLoader()
 
@@ -72,7 +73,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
     }
     
     func addPlacesPin() {
-        manager.forEach { place in
+        manager.places.forEach { place in
             let pin = MKPlacemark(coordinate: place.location)
             var annotationPin = MKPointAnnotation()
             annotationPin.coordinate = pin.coordinate
@@ -87,7 +88,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
                mapView.removeAnnotation(notation)
            }
        }
-       manager = ManagerPlaces.shared().places
+       manager = ManagerPlaces.shared()
     }
  
     func setLoader() {
@@ -110,10 +111,10 @@ extension MapViewController: MKMapViewDelegate {
        print("didSelectAnnotationTapped", view)
        let dc = self.storyboard?.instantiateViewController(withIdentifier: "idDetailController") as! DetailController
        print(view.annotation)
-       let index = manager.firstIndex(where: {$0.name == view.annotation?.title &&
+       let index = manager.places.firstIndex(where: {$0.name == view.annotation?.title &&
            $0.location.latitude == view.annotation?.coordinate.latitude &&
            $0.location.longitude == view.annotation?.coordinate.longitude})
-       dc.place = manager[index!]
+       dc.place = manager.GetItemAt(position: index!)
        self.present(dc, animated: true)
    }
 }

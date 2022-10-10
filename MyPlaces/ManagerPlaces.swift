@@ -65,6 +65,11 @@ class ManagerPlaces : Codable {
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
     }
     
+    func new(_ value: Place) {
+        append(value)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
+    }
+    
     //******************************************
       // Serialization
       
