@@ -47,15 +47,13 @@ class FirstViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
-     // Access to item using manager
-       // let selected = manager[indexPath.row]
+        // Access to item using manager
         let selected = manager.GetItemAt(position: indexPath.row)
-     // Present detail controller
+        
+        // Present detail controller
         let dc = self.storyboard?.instantiateViewController(withIdentifier: "idDetailController") as! DetailController
         dc.place = selected
-        //dc.image = UIImageView(image: UIImage(named: "sun.png"))
-        //dc.notes.text = "HOLa"
-        self.present(dc, animated: true)
+        present(dc, animated: true, completion: nil)
        
     }
    

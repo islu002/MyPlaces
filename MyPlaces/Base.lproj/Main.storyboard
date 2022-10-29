@@ -164,7 +164,7 @@
         <!--Detail Controller-->
         <scene sceneID="vDQ-aa-OnH">
             <objects>
-                <viewController storyboardIdentifier="idDetailController" id="o82-o2-8uM" customClass="DetailController" customModule="MyPlaces" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailController" id="o82-o2-8uM" customClass="DetailController" customModule="MyPlaces" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OzL-EQ-dL5">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

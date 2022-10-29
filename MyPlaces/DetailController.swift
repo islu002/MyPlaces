@@ -45,16 +45,19 @@ class DetailController: UIViewController, UIPickerViewDelegate, UIPickerViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textName.text = place?.name
-        textDescription.text = place?.description
-        imagePicked.image = UIImage(named: "sun.png")
-
-        // Do any additional setup after loading the view.
-        
-        //self.constrainHeight.constant = 400
-        viewPicker.delegate = self
-        viewPicker.dataSource = self
-        index = manager.GetPosition(place!)
+        if(place == nil) {
+            
+        }
+        else {
+            textName.text = place?.name
+            textDescription.text = place?.description
+            imagePicked.image = UIImage(named: "sun.png")
+            
+            //self.constrainHeight.constant = 400
+            viewPicker.delegate = self
+            viewPicker.dataSource = self
+            index = manager.GetPosition(place!)
+        }
     }
   
     override func viewDidAppear(_ animated: Bool) {
