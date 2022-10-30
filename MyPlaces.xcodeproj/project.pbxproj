@@ -23,7 +23,8 @@
 		DD5E917C28E1082700FA4CDB /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5E917B28E1082700FA4CDB /* FirstViewController.swift */; };
 		DD9E0E0128F374930026E01D /* sun.png in Resources */ = {isa = PBXBuildFile; fileRef = DD9E0E0028F374930026E01D /* sun.png */; };
 		DDAEFD4F28EF721A00E5A576 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAEFD4E28EF721A00E5A576 /* MapViewController.swift */; };
-		DDB043C828E643D100B882D8 /* NewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB043C728E643D100B882D8 /* NewViewController.swift */; };
+		DDE590A3290DD1270042BE82 /* ManagerLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE590A2290DD1270042BE82 /* ManagerLocation.swift */; };
+		DDE590A5290DD7D00042BE82 /* FileSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE590A4290DD7D00042BE82 /* FileSystem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +65,8 @@
 		DD5E917B28E1082700FA4CDB /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
 		DD9E0E0028F374930026E01D /* sun.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sun.png; sourceTree = "<group>"; };
 		DDAEFD4E28EF721A00E5A576 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		DDB043C728E643D100B882D8 /* NewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewViewController.swift; sourceTree = "<group>"; };
+		DDE590A2290DD1270042BE82 /* ManagerLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagerLocation.swift; sourceTree = "<group>"; };
+		DDE590A4290DD7D00042BE82 /* FileSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileSystem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,8 +130,9 @@
 				DD5E914C28E0FE5F00FA4CDB /* Assets.xcassets */,
 				DD5E914E28E0FE5F00FA4CDB /* LaunchScreen.storyboard */,
 				DD5E915128E0FE5F00FA4CDB /* Info.plist */,
-				DDB043C728E643D100B882D8 /* NewViewController.swift */,
 				DDAEFD4E28EF721A00E5A576 /* MapViewController.swift */,
+				DDE590A2290DD1270042BE82 /* ManagerLocation.swift */,
+				DDE590A4290DD7D00042BE82 /* FileSystem.swift */,
 			);
 			path = MyPlaces;
 			sourceTree = "<group>";
@@ -290,8 +293,9 @@
 				DD5E917C28E1082700FA4CDB /* FirstViewController.swift in Sources */,
 				DD5E914828E0FE5E00FA4CDB /* ViewController.swift in Sources */,
 				DD5E917928E1004A00FA4CDB /* Place.swift in Sources */,
-				DDB043C828E643D100B882D8 /* NewViewController.swift in Sources */,
+				DDE590A5290DD7D00042BE82 /* FileSystem.swift in Sources */,
 				DD5E914428E0FE5E00FA4CDB /* AppDelegate.swift in Sources */,
+				DDE590A3290DD1270042BE82 /* ManagerLocation.swift in Sources */,
 				DD5E914628E0FE5E00FA4CDB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,9 +477,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyPlaces/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app wants to take pictures.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "GPS required";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "GPS required";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS required";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app wants to take pictures.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -505,9 +511,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MyPlaces/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This app wants to take pictures.";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "GPS required";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "GPS required";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "GPS required";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "This app wants to take pictures.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

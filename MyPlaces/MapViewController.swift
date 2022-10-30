@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, CLLocationManagerDelegate  {
+class MapViewController: UIViewController, CLLocationManagerDelegate, ManagerPlacesObserver  {
 
     // MARK: - Variables
     @IBOutlet weak var mapView: MKMapView!
@@ -30,11 +30,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         locationManger.requestAlwaysAuthorization()
         locationManger.requestWhenInUseAuthorization()
         
+        manager.addObserver(object:self)
+        
         if (CLLocationManager.locationServicesEnabled()) {
             locationManger.delegate = self
             locationManger.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManger.startUpdatingLocation()
-            print("LOCATION", locationManger.location?.coordinate)
+            //print("LOCATION", locationManger.location?.coordinate)
             var pin = MKPlacemark(coordinate: locationManger.location!.coordinate)
             let region = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
             mapView.setRegion(region, animated: true)
@@ -45,24 +47,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
         }
         
         addPlacesPin()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshData), name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshData), name: NSNotification.Name(rawValue: "deleteElement"), object: nil)
+
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(2000)) {
             self.disableLoader()
-
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     func setPinUsingMKPlacemark(location: CLLocationCoordinate2D) {
        let pin = MKPlacemark(coordinate: location)
@@ -81,14 +71,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
             mapView.addAnnotation(annotationPin)
         }
     }
-    
-    @objc func refreshData() {
-       mapView.annotations.forEach { notation in
-           if !(notation.isEqual(annotation)) {
-               mapView.removeAnnotation(notation)
-           }
-       }
-       manager = ManagerPlaces.shared()
+    func onPlacesChange() {
+        mapView.annotations.forEach { notation in
+            if !(notation.isEqual(annotation)) {
+                mapView.removeAnnotation(notation)
+            }
+            addPlacesPin()
+            
+        }
+        manager = ManagerPlaces.shared()
     }
  
     func setLoader() {
@@ -108,14 +99,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate  {
 extension MapViewController: MKMapViewDelegate {
 
    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView){
-       print("didSelectAnnotationTapped", view)
-       let dc = self.storyboard?.instantiateViewController(withIdentifier: "idDetailController") as! DetailController
-       print(view.annotation)
+       //print("didSelectAnnotationTapped", view)
+       let dc = self.storyboard?.instantiateViewController(withIdentifier: "DetailController") as! DetailController
+    
        let index = manager.places.firstIndex(where: {$0.name == view.annotation?.title &&
            $0.location.latitude == view.annotation?.coordinate.latitude &&
            $0.location.longitude == view.annotation?.coordinate.longitude})
-       dc.place = manager.GetItemAt(position: index!)
-       self.present(dc, animated: true)
+       
+       if((index) != nil) {
+           dc.place = manager.GetItemAt(position: index!)
+           self.present(dc, animated: true)
+       }
+       
    }
 }
 

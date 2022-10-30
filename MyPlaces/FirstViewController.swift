@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FirstViewController : UITableViewController {
+class FirstViewController : UITableViewController, ManagerPlacesObserver {
     @IBOutlet weak var loadingView: UIView!
 
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -20,10 +20,8 @@ class FirstViewController : UITableViewController {
         let view: UITableView = (self.view as? UITableView)!;
                 view.delegate = self
                 view.dataSource = self
-        // Do any additional setup after loading the view.
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "deleteElement"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refresh), name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
         
+        manager.addObserver(object:self)
         //disableLoader()
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(3000)) {
             self.disableLoader()
@@ -51,7 +49,7 @@ class FirstViewController : UITableViewController {
         let selected = manager.GetItemAt(position: indexPath.row)
         
         // Present detail controller
-        let dc = self.storyboard?.instantiateViewController(withIdentifier: "idDetailController") as! DetailController
+        let dc = self.storyboard?.instantiateViewController(withIdentifier: "DetailController") as! DetailController
         dc.place = selected
         present(dc, animated: true, completion: nil)
        
@@ -73,7 +71,7 @@ class FirstViewController : UITableViewController {
         // UILabel and UIImageView
         
         var label: UILabel
-        label = UILabel(frame: CGRect(x:90,y:10,width:wt,height:40))
+        label = UILabel(frame: CGRect(x:100,y:10,width:wt,height:40))
         let fuente: UIFont = UIFont(name: "Arial", size: 18)!
         label.font = fuente
         label.numberOfLines = 1
@@ -83,7 +81,7 @@ class FirstViewController : UITableViewController {
         cell.contentView.addSubview(label)
         
         var description: UILabel
-        description = UILabel(frame: CGRect(x:90,y:50,width:wt,height:40))
+        description = UILabel(frame: CGRect(x:100,y:50,width:wt,height:40))
         let fuenteDescription: UIFont = UIFont(name: "Arial", size: 12)!
         description.font = fuenteDescription
         description.numberOfLines = 4
@@ -92,7 +90,13 @@ class FirstViewController : UITableViewController {
         description.sizeToFit()
         cell.contentView.addSubview(description)
             
-        let imageIcon: UIImageView = UIImageView(image: UIImage(named:"sun.png"))
+        let imageIcon: UIImageView
+        if(manager.GetItemAt(position: indexPath.row).image != nil) {
+            imageIcon = UIImageView(image: UIImage(data: manager.GetItemAt(position: indexPath.row).image!))
+        }
+        else {
+            imageIcon = UIImageView(image: UIImage(named:"sun.png"))
+        }
         imageIcon.frame = CGRect(x:10, y:10, width:80, height:80)
         cell.contentView.addSubview(imageIcon)
         
@@ -100,13 +104,6 @@ class FirstViewController : UITableViewController {
         return cell
     }
     
-    @objc func refresh(){
-        //manager = ManagerPlaces.shared().places
-        setLoader()
-        manager = ManagerPlaces.shared()
-        self.tableView.reloadData()
-        disableLoader()
-    }
 
     func setLoader() {
         loadingView.isHidden = false
@@ -119,6 +116,11 @@ class FirstViewController : UITableViewController {
         spinner.isHidden = true
         loadingView.frame = CGRect(x:0, y:0, width: 0, height: 0)
         loadingView.isHidden = true
+    }
+    
+    func onPlacesChange() {
+        let view: UITableView = (self.view as? UITableView)!;
+        view.reloadData()
     }
         
 }

@@ -9,6 +9,7 @@ import Foundation
 
 class ManagerPlaces : Codable {
     var places: [Place] = []
+    public var m_observers = Array<ManagerPlacesObserver>()
     
     init() { }
     
@@ -20,11 +21,13 @@ class ManagerPlaces : Codable {
     //
     private static var sharedManagerPlaces: ManagerPlaces = {
             
-            var singletonManager:ManagerPlaces
+        var singletonManager:ManagerPlaces?
            
+        singletonManager = load()
+        if(singletonManager == nil) {
             singletonManager = ManagerPlaces()
-            
-            return singletonManager
+        }
+        return singletonManager!
         }()
         
         
@@ -53,7 +56,7 @@ class ManagerPlaces : Codable {
     func remove(_ value: Place) {
         let index = places.firstIndex(where: {$0 === value})
        places.remove(at: index!)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteElement"), object: nil)
+        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "deleteElement"), object: nil)
     }
     
     func GetPosition(_ value: Place) -> Int {
@@ -62,12 +65,12 @@ class ManagerPlaces : Codable {
     
     func update(_ value: Place, index: Int) {
         places[index] = value
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
+        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
     }
     
     func new(_ value: Place) {
         append(value)
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
+        //NotificationCenter.default.post(name: NSNotification.Name(rawValue: "newOrUpdateElement"), object: nil)
     }
     
     //******************************************
@@ -127,4 +130,58 @@ class ManagerPlaces : Codable {
           try container.encode(places, forKey: .places)
           
       }
+    
+    func store() {
+        do{
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(self)
+            for place in places {
+                    if(place.image != nil){
+                        FileSystem.WriteData(id:place.id,image:place.image!)
+                        place.image = nil;
+                    }
+            }
+            FileSystem.Write(data: String(data: data, encoding:.utf8)!)
+        }
+        catch
+        {
+            
+        }
+    }
+    
+    static func load() -> ManagerPlaces? {
+        var resul:ManagerPlaces? = nil
+        let data_str = FileSystem.Read()
+        if(data_str != "") {
+            do {
+                let decoder = JSONDecoder()
+                let data:Data = Data(data_str.utf8)
+                resul = try decoder.decode(ManagerPlaces.self,from:data)
+            }
+            catch
+            {
+                resul = nil
+            }
+        }
+        return resul
+    }
+    
+    public func addObserver(object:ManagerPlacesObserver) {
+        m_observers.append(object)
+    }
+    
+    public func UpdateObservers() {
+        for element in m_observers {
+            element.onPlacesChange()
+        }
+    }
+    
+    func GetPathImage(p:Place)->String {
+        let r = FileSystem.GetPathImage(id:p.id)
+        return r;
+    }
+}
+
+protocol ManagerPlacesObserver {
+    func onPlacesChange()
 }

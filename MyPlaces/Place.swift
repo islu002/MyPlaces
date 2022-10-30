@@ -43,13 +43,14 @@ class Place : Codable {
     //******************************************
       // Serialization
       
-      enum CodingKeys: String, CodingKey {
-          case id
-          case name
-          case type
-          case description
-          case image
-      }
+        enum CodingKeys: String, CodingKey {
+            case id
+            case description
+            case name
+            case type
+            case latitude
+            case longitude
+        }
       
       func decode(from decoder: Decoder) throws
       {
@@ -60,7 +61,10 @@ class Place : Codable {
           type = try container.decode(PlacesTypes.self, forKey: .type)
           name = try container.decode(String.self, forKey: .name)
           description = try container.decode(String.self, forKey: .description)
-          image = try? container.decode(String.self, forKey: .image) as! Data?
+          //image = try? container.decode(String.self, forKey: .image) as! Data?
+          let latitude = try container.decode(Double.self, forKey:.latitude)
+          let longitude = try container.decode(Double.self, forKey:.longitude)
+          location = CLLocationCoordinate2D(latitude: latitude,longitude: longitude)
       }
       
       required convenience init(from decoder: Decoder) throws {
@@ -75,8 +79,9 @@ class Place : Codable {
           try container.encode(type, forKey: .type)
           try container.encode(name, forKey: .name)
           try container.encode(description, forKey: .description)
-          try container.encode(image, forKey: .image)
-        
+          //try container.encode(image, forKey: .image)
+          try container.encode(location.latitude, forKey:.latitude)
+          try container.encode(location.longitude, forKey:.longitude)
       }
 
 }
